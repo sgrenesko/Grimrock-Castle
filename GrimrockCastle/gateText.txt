@@ -1,0 +1,13 @@
+You approach the daunting and decrepit wooden gates that guard the crumbling wall of Grimrock Castle.
+The hinges are rusting, the hardwood doors of the gate stand tall before you, locked tightly shut. 
+The stone walls of Gatefront Keep stretch in either direction for miles, with no other entry way in sight. 
+At the top of the wall is a rotting wooden watchtower, and at the base of the wall is the hollow remains of a tollhouse.
+The air is still and the grey clouds hang low in the sky as dawn breaks into a dreary day...
+.
+.
+.
+What do you do?
+1) Attack
+2) Move
+3) Inspect
+4) Inventory
