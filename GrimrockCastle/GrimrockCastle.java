@@ -75,7 +75,7 @@ public class GrimrockCastle {
     // Begin first 'level', exposition and image loading
         //Everything from now on is based on if you live or die
         while (charHealth > 0 && choice2<2) {
-            delayedPrint("\n            Welcome to ...");
+            delayedPrint("\n                    Welcome to ...");
             textName = "gateTitle.txt";
             titlePrint(textName);
             textName = "gateText.txt";
@@ -114,8 +114,10 @@ public class GrimrockCastle {
             textName="loadScreen.txt";
             scrollScreen(textName);
             clearConsole();
-            textName="fightTitle.txt";
-            scrollScreen(textName);
+            if(choice2==1){
+                textName="fightTitle.txt";
+                scrollScreen(textName);
+            }
 
             //load npc data for use in control logic
             npcType = 1;
@@ -395,7 +397,7 @@ public class GrimrockCastle {
         delayedPrint("You push against the decaying stonework with all you might and..!\n");
         if (classType != 0) {
             delayedPrint(
-                    "You slam your body into the wall, but you are no knight... The bricks crumble enough to pass through...\n but you take 10 damage from the impact!");
+                    "Your slam your body into the wall, but you are no knight... The bricks crumble enough to pass through...\n but you take 10 damage from the impact!");
             charHealth = charHealth - 10;
         } else {
             delayedPrint(
