@@ -1,0 +1,20 @@
+You have made your way up the stone staircase leading from the outer wall to the front door of Castle Grimrock.
+The looming mahogany doorway has withstood the test of time, fairing better than Gatekeep. 
+You pull on the sturdy iron handle and slowly, the great doors of Castle Grimrock open...
+
+You enter and find yourself in the Main Hall, decorated with 
+fine tapestries depicting banquets, battlefields, and bones. 
+The braziers slowly glow brighter, flames magically sputtering to life, as if welcoming you inside...
+
+You look around the room, trying to eye anything of value, when suddenly, 
+the door to the far right flings open!
+A chattering skeleton clad in old armor with a rusted greatsword clambers forth, 
+and begins patrolling the far side of the room!
+.
+.
+.
+What do you do?
+1) Attack
+2) Move
+3) Inspect
+4) Inventory
