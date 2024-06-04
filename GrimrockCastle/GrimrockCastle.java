@@ -3,19 +3,19 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import javax.swing.JLabel;
+//import javax.swing.Timer;
+//import java.awt.event.ActionEvent;
+//import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
 
 public class GrimrockCastle {
 // Global variables and objects go here
-    private static JFrame currentFrame = null;
+    //private static JFrame currentFrame = null;
     static Scanner scanner = new Scanner(System.in);
     static int delaySec = 32;
     static int pauseGame = 3000;
@@ -110,13 +110,14 @@ public class GrimrockCastle {
             }
             
             //Begin combat phase
-            gameDelay();
-            textName="loadScreen.txt";
-            scrollScreen(textName);
-            clearConsole();
-            textName="fightTitle.txt";
-            scrollScreen(textName);
-
+            if(choice2<2){
+                gameDelay();
+                textName="loadScreen.txt";
+                scrollScreen(textName);
+                clearConsole();
+                textName="fightTitle.txt";
+                scrollScreen(textName);
+            }
             //load npc data for use in control logic
             npcType = 1;
             npcHealth = 50;

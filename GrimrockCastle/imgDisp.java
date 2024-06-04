@@ -4,7 +4,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
+import java.util.*;
 
+@SuppressWarnings("unused")
 public class imgDisp {
     private static JFrame currentFrame = null;
  public static void displayImage(String imageName) {
