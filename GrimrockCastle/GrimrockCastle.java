@@ -1,14 +1,24 @@
 
 //Library imports go here
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.Random;
 
 public class GrimrockCastle {
 // Global variables and objects go here
+    private static JFrame currentFrame = null;
     static Scanner scanner = new Scanner(System.in);
     static int delaySec = 32;
     static int pauseGame = 3000;
-    
 
 // Main method that has minor control logic, some text to small to keep in a file, and calls to the various game functions
     public static void main(String[] args) {
@@ -17,33 +27,29 @@ public class GrimrockCastle {
         int classType = 0, charHealth = 0, npcHealth = 1, choice1 = 0, choice2 = 0, npcType, charDMG = 0, npcDMG = 0, potNum=3;
         String[] classArr = { "Knight", "Wizard", "Thief" };
         String[] weaponArr = { "[GREATSWORD] ", "[ARCANE_STAFF] ", "[THROWING_KNIFE] " };
-        @SuppressWarnings("unused")
-        delayDisplay titleDisplay = new delayDisplay();
-        classType userClass = new classType();
 
 // Begin main method
-
     // Display the intro text and title
         textName = "titletext.txt";
-        delayDisplay.delayedPrint("                Welcome to ...");
-        delayDisplay.titleDisplay(textName);
+        delayedPrint("                Welcome to ...");
+        titlePrint(textName);
 
     // Asks for user to input name
         textName = "nametext.txt";
-        delayDisplay.fileDelayPrint(textName);
+        fileDelayPrint(textName);
         String userName = getName();
-        delayDisplay.delayedPrint("Hello " + userName + "!");
+        delayedPrint("Hello " + userName + "!");
         gameDelay();
         textName = "loadScreen.txt";
-        delayDisplay.scrollScreen(textName);
+        scrollScreen(textName);
         clearConsole();
 
     // Ask user to enter choice for their class
-        delayDisplay.delayedPrint(
+        delayedPrint(
                 "\nWe will now choose a class for you to play as! \nPlease select one of the following classes by typing the class name and hitting enter:");
         textName = "classSelect.txt";
-        delayDisplay.titleDisplay(textName);
-        classType = userClass.classNum();
+        titlePrint(textName);
+        classType = classType();
         switch (classType) {
             case 0:
                 charHealth = 150;
@@ -55,13 +61,13 @@ public class GrimrockCastle {
                 charHealth = 100;
                 break;
         }
-        imageName = userClass.classImg(classType);
+        imageName = classPic(classType);
         imgDisp.displayImage(imageName);
-        delayDisplay.delayedPrint("You have chosen: " + classArr[classType]);
+        delayedPrint("You have chosen: " + classArr[classType]);
         weapon = weaponArr[classType];
         gameDelay();
         textName = "loadScreen.txt";
-        delayDisplay.scrollScreen(textName);
+        scrollScreen(textName);
         clearConsole();
 
 
@@ -69,34 +75,34 @@ public class GrimrockCastle {
     // Begin first 'level', exposition and image loading
         //Everything from now on is based on if you live or die
         while (charHealth > 0 && choice2<2) {
-            delayDisplay.delayedPrint("\n                    Welcome to ...");
+            delayedPrint("\n            Welcome to ...");
             textName = "gateTitle.txt";
-            delayDisplay.titleDisplay(textName);
+            titlePrint(textName);
             textName = "gateText.txt";
-            delayDisplay.fileDelayPrint(textName);
+            fileDelayPrint(textName);
             while (choice1 < 3) {
-                choice1 = firstEvent.gateChoice(classType);
+                choice1 = gateChoice(classType);
             }
             if (choice1 == 3) {
                 charHealth = wallChoice1(classType, charHealth);
-                delayDisplay.delayedPrint(
+                delayedPrint(
                         "...\nAfter your brief game of stone wall Jenga, you brush stone dust off of your shoulder, and move onward to the Castle proper...");
             } else if (choice1 == 4) {
-                delayDisplay.delayedPrint(
+                delayedPrint(
                         "...\nAs the dust settles from the collapsing door, you gently hop over the debris and move onward to the Castle proper...");
             }
             gameDelay();
             textName = "loadScreen.txt";
-            delayDisplay.scrollScreen(textName);
+            scrollScreen(textName);
             clearConsole();
 
         // Begin 2nd level
             //Text load for level
-            delayDisplay.delayedPrint("                                  You are now entering...");
+            delayedPrint("                                  You are now entering...");
             textName = "insideTitle.txt";
-            delayDisplay.titleDisplay(textName);
+            titlePrint(textName);
             textName = "insideText.txt";
-            delayDisplay.fileDelayPrint(textName);
+            fileDelayPrint(textName);
 
             //Loop logic for pre combat choices
             while (choice2 == 0) {
@@ -106,12 +112,10 @@ public class GrimrockCastle {
             //Begin combat phase
             gameDelay();
             textName="loadScreen.txt";
-            delayDisplay.scrollScreen(textName);
+            scrollScreen(textName);
             clearConsole();
-            if(choice2==1){
-                textName="fightTitle.txt";
-                delayDisplay.scrollScreen(textName);
-            }
+            textName="fightTitle.txt";
+            scrollScreen(textName);
 
             //load npc data for use in control logic
             npcType = 1;
@@ -129,12 +133,12 @@ public class GrimrockCastle {
         }
             //End of combat results
             if (npcHealth<=0){
-            delayDisplay.delayedPrint("You vanquish the boney undead guard! The skeleton crumbles to the ground and turns to ash! You freely approach the open door, heading further inside to the throne room. Who knows what will await you there...");    
+            delayedPrint("You vanquish the boney undead guard! The skeleton crumbles to the ground and turns to ash! You freely approach the open door, heading further inside to the throne room. Who knows what will await you there...");    
             }
             else if (charHealth<=0){
-                delayDisplay.delayedPrint("You have fallen to your undead adversary... Your corpse dragged to the Inner Sanctum to be added to the army of undead... YOU LOSE");
+                delayedPrint("You have fallen to your undead adversary... Your corpse dragged to the Inner Sanctum to be added to the army of undead... YOU LOSE");
             }
-                delayDisplay.delayedPrint("\nTO BE CONTINUED");
+                delayedPrint("\nTO BE CONTINUED");
                 break;
         }
 
@@ -148,6 +152,120 @@ public class GrimrockCastle {
         return name;
     }
 
+// Function that determines the internal variable for tracking your class, used in other functions
+    public static int classType() {
+        int classInt = 0;
+
+        while (true) {
+            String input = scanner.nextLine();
+            String classIn;
+            classIn = input.toLowerCase();
+            switch (classIn) {
+                case "knight":
+                    classInt = 0;
+                    break;
+                case "wizard":
+                    classInt = 1;
+                    break;
+                case "thief":
+                    classInt = 2;
+                    break;
+                default:
+                    delayedPrint("\nInvalid class choice! Please try again.");
+                    continue;
+            }
+            return classInt;
+        }
+
+    }
+
+    
+// Iterates through every line then prints out a line every .25 seconds simulating older OS loading
+    public static void titlePrint(String textName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(textName))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//Creates scrolling effect when printing lines of .txt files for title loading
+    public static void scrollScreen(String textName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(textName))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+// A print delay that creates the scrolling text effect on print lines in the main
+    public static void delayedPrint(String message) {
+        for (char c : message.toCharArray()) {
+            System.out.print(c);
+            try {
+                TimeUnit.MILLISECONDS.sleep(delaySec);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println();
+    }
+
+// Logic to determine what class you chose, and what image to display
+    public static String classPic(int classType) {
+        String filename = " ";
+        switch (classType) {
+            case 0:
+                filename = "knight_pixel.png";
+                break;
+            case 1:
+                filename = "wizard_pixel.png";
+                break;
+            case 2:
+                filename = "thief_pixel.png";
+                break;
+        }
+
+        return filename;
+    }
+
+// Creates the scrolling text effect for .txt files with large amounts of text
+    public static void fileDelayPrint(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                for (char c : line.toCharArray()) {
+                    System.out.print(c);
+                    try {
+                        Thread.sleep(delaySec); // Adding delay between characters
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                System.out.println(); // Move to the next line after printing each line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 //Delays actions in console to keep things uniform and neat
     public static void gameDelay() {
@@ -160,7 +278,7 @@ public class GrimrockCastle {
 
     public static void combatDelay() {
         try {
-            Thread.sleep(1500); // 1500 milliseconds = 1.5 seconds
+            Thread.sleep(3000); // 3000 milliseconds = 3 seconds
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -168,16 +286,71 @@ public class GrimrockCastle {
 
 
 //Switch logic for first obstacle, some choices have class dependent results and flavor text i.e. item in inventory
+    public static int gateChoice(int classType) {
+        char yn;
+        String YN;
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                delayedPrint("You kick the door, but the only outcome is a stubbed toe... Ouch!");
+                break;
+            case 2:
+                delayedPrint("The door is locked tight, and there is nowhere to go!");
+                break;
+            case 3:
+                delayedPrint(
+                        "Upon closer inspection, there are loose bricks around one of the hinges...\nWould you like to try to push the bricks apart? (Y/N):");
+                YN = scanner.next();
+                YN = YN.toUpperCase();
+                yn = YN.charAt(0);
+                if (yn == 'Y') {
+                    break;
+                } else {
+                    delayedPrint("You back away from the ruined wall to gather your thoughts...");
+                    choice = 0;
+                }
+                break;
+            case 4:
+                delayedPrint("You open your pack and look inside...\nYou found a...");
+                switch (classType) {
+                    case 0:
+                        delayedPrint("[GREATAXE]");
+                        break;
+                    case 1:
+                        delayedPrint("[FIREBALL SCROLL]");
+                        break;
+                    case 2:
+                        delayedPrint("[CHERRY BOMB]");
+                        break;
+                }
+                delayedPrint("Would you like to use it?(Y/N)");
+                YN = scanner.next();
+                YN = YN.toUpperCase();
+                yn = YN.charAt(0);
+                if (yn == 'Y') {
+                    break;
+                } else {
+                    delayedPrint("You quickly repack your bag to ponder another solution...");
+                    choice = 0;
+                }
+                break;
+                default:
+                delayedPrint("Invalid choice! Please try again");
+                choice = 0;
+        }
+
+        return choice;
+    }
 
 //Result for getting by first obstacle by inspecting, outcomes are class depenedent
     public static int wallChoice1(int classType, int charHealth) {
-        delayDisplay.delayedPrint("You push against the decaying stonework with all you might and..!\n");
+        delayedPrint("You push against the decaying stonework with all you might and..!\n");
         if (classType != 0) {
-            delayDisplay.delayedPrint(
-                    "Your slam your body into the wall, but you are no knight... The bricks crumble enough to pass through...\n but you take 10 damage from the impact!");
+            delayedPrint(
+                    "You slam your body into the wall, but you are no knight... The bricks crumble enough to pass through...\n but you take 10 damage from the impact!");
             charHealth = charHealth - 10;
         } else {
-            delayDisplay.delayedPrint(
+            delayedPrint(
                     "With a mighty heave you crash into the wall! Your armor protects you from the falling debris as the old keep tumbles to pieces around you...");
         }
         return charHealth;
@@ -189,34 +362,34 @@ public class GrimrockCastle {
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
-                delayDisplay.delayedPrint(
+                delayedPrint(
                         "\nYou take up arms with a fire in your eyes... This skeleton will meet its end at your hand! Prepare for battle!");
                 result = 1;
                 break;
             case 2:
                 if (classType == 2) {
-                    delayDisplay.delayedPrint(
+                    delayedPrint(
                             "\nYou quietly step into the shadows at the edge of the room, as you silently step across the hall...\nYou gracefully duck between cover, and slink through the open door, gently closing it behind you as the skeleton chatters, ignorant to your presence...");
                     result = 2;
                     break;
                 } else {
-                    delayDisplay.delayedPrint(
+                    delayedPrint(
                             "\nYou take a few steps forward, the sound of your footsteps echoing through the chamber... The skeleton quickly faces towards you, clacks its jaw, and runs to engage! Prepare for battle!");
                     result = 1;
                 }
                 break;
             case 3:
-                delayDisplay.delayedPrint(
+                delayedPrint(
                         "\nYou look around to find a path to escape... but the only doors around consist of the main entrance, and where the skeleton emerged...");
                 result = 0;
                 break;
             case 4:
-                delayDisplay.delayedPrint(
+                delayedPrint(
                         "\nYou rummage through your pack... but deem nothing in there very useful for this situation...");
                 result = 0;
                 break;
                 default:
-                delayDisplay.delayedPrint("Invalid choice! Please try again");
+                delayedPrint("Invalid choice! Please try again");
                 result = 0;
         }
 
@@ -245,47 +418,47 @@ public class GrimrockCastle {
         char yn;
         String YN;
         while(combatLoop==1){
-        delayDisplay.delayedPrint("\nThe skeleton shuffles on its bony feet, ready to strike!\n");
-        delayDisplay.fileDelayPrint("choicesText.txt");
+        delayedPrint("\nThe skeleton shuffles on its bony feet, ready to strike!\n");
+        fileDelayPrint("choicesText.txt");
         int choice = scanner.nextInt();
         
         switch (choice) {
             case 1:
                 dmg = playerAttack(classType);
-                delayDisplay.delayedPrint("You attack the skeleton with your " + weapon + "dealing " + dmg + " damage!\n");
+                delayedPrint("You attack the skeleton with your " + weapon + "dealing " + dmg + " damage!\n");
                 combatLoop=0;
                 break;
             case 2:
-                delayDisplay.delayedPrint("You try to move passed the skeleton... but it thrusts its sword blocking the way!\n");
+                delayedPrint("You try to move passed the skeleton... but it thrusts its sword blocking the way!\n");
                 combatLoop=0;
                 combatDelay();
                 break;
             case 3:
-                delayDisplay.delayedPrint("\nCurrent Player Health: " + charHealth +'\n');
+                delayedPrint("\nCurrent Player Health: " + charHealth +'\n');
                 combatDelay();
                 combatLoop = 1;
                 break;
             case 4:
-                delayDisplay.delayedPrint("You look into your pack and find... " + potNum
+                delayedPrint("You look into your pack and find... " + potNum
                         + " Potions of Health!\nWould you like to use one?(Y/N)");
                 YN = scanner.next();
                 YN = YN.toUpperCase();
                 yn = YN.charAt(0);
                 if (yn == 'Y') {
                     dmg = potRoll(potNum);
-                    delayDisplay.delayedPrint("You drink the potion and heal for ["+dmg+"] health!");
+                    delayedPrint("You drink the potion and heal for ["+dmg+"] health!");
                     dmg=dmg*-1;
                     combatLoop=0;
                     combatDelay();
                 } else {
-                    delayDisplay.delayedPrint("You quickly close your pack to resume combat...");
+                    delayedPrint("You quickly close your pack to resume combat...");
                     combatLoop=1;
                     combatDelay();
                 }
                 
                 break;
                 default:
-                delayDisplay.delayedPrint("Invalid choice! Try again");
+                delayedPrint("Invalid choice! Try again");
                 combatLoop=1;
         }
     }
@@ -323,7 +496,7 @@ public class GrimrockCastle {
         } else {
             attack = rand.nextInt(10) + 1;
         }
-        delayDisplay.delayedPrint("The skeleton clacks its jaw in rage! It attacks you for " + attack + " damage!");
+        delayedPrint("The skeleton clacks its jaw in rage! It attacks you for " + attack + " damage!");
         combatDelay();
         return attack;
     }
@@ -336,7 +509,7 @@ public class GrimrockCastle {
         heal = rand.nextInt(8)+2;
         }
         else{
-            delayDisplay.delayedPrint("You are out of healing potions!");
+            delayedPrint("You are out of healing potions!");
             heal = 0;
         }
         return heal;
