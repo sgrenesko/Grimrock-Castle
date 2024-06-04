@@ -1,17 +1,11 @@
-
 //Library imports go here
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-//import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-//import javax.swing.JLabel;
-//import javax.swing.Timer;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
+import java.io.*;
 
 public class GrimrockCastle {
 // Global variables and objects go here
@@ -27,6 +21,11 @@ public class GrimrockCastle {
         int classType = 0, charHealth = 0, npcHealth = 1, choice1 = 0, choice2 = 0, npcType, charDMG = 0, npcDMG = 0, potNum=3;
         String[] classArr = { "Knight", "Wizard", "Thief" };
         String[] weaponArr = { "[GREATSWORD] ", "[ARCANE_STAFF] ", "[THROWING_KNIFE] " };
+        String[] [] classInfo ={
+        {"[KNIGHT]","[GREATSWORD]","[BATTLEAXE]"},
+        {"[WIZARD]","[ARCANE_STAFF]","[FIREBALL_SCROLL]"},
+        {"[THIEF]","[THROWING_KNIFE]","[CHERRY_BOMB]"}
+        };
 
 // Begin main method
     // Display the intro text and title
@@ -315,13 +314,16 @@ public class GrimrockCastle {
                 delayedPrint("You open your pack and look inside...\nYou found a...");
                 switch (classType) {
                     case 0:
+                        imgDisp.displayImage("[GREATAXE].png");
                         delayedPrint("[GREATAXE]");
                         break;
                     case 1:
-                        delayedPrint("[FIREBALL SCROLL]");
+                        imgDisp.displayImage("[FIREBALL_SCROLL].png");
+                        delayedPrint("[FIREBALL_SCROLL]");
                         break;
                     case 2:
-                        delayedPrint("[CHERRY BOMB]");
+                        imgDisp.displayImage("[CHERRY_BOMB].png");
+                        delayedPrint("[CHERRY_BOMB]");
                         break;
                 }
                 delayedPrint("Would you like to use it?(Y/N)");

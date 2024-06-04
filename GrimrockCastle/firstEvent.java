@@ -33,6 +33,7 @@ public class firstEvent {
                             delayDisplay.delayedPrint("You open your pack and look inside...\nYou found a...");
                             switch (classType) {
                                 case 0:
+                                    
                                     delayDisplay.delayedPrint("[GREATAXE]");
                                     break;
                                 case 1:
